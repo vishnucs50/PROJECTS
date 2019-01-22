@@ -1,37 +1,54 @@
-#include<stdio.h>
 #include<cs50.h>
+#include<stdio.h>
 #include<string.h>
 #include<ctype.h>
-
 int main(int argc, string argv[]){
-    if(argc!=2){
-        printf("please give only two commands");
-        return 0;
+
+    string v = argv[1];
+    int i = 0;
+    while(i < strlen(v))
+    {
+        if(!isalpha(v[i]))
+        {
+            // printf("wrong input. Exiting\n");
+            exit(0);
+        }
+        i++;
     }
-    int length= strlen(argv[1]);
-    string code= get_string("Enter your message:");
-
-    for (int i=0, j=0, result=0; i<strlen(code);i++){
-        char letter= code[i];
-        char key= argv[1][(j)%length];
-
-        if(isupper(key)){
-            key=key-65;
-        }
-        if(islower(key)){
-            key=key-97;
-        }
-        if((islower(letter))){
-            result=(letter+key-97)%26+97;
+    // eprintf("good input\n");
+    string msg= get_string("Enter Message: ");
+    printf("ciphertext: ");
+    char upper[26];
+    char lower[26];
+    int z=0;
+    //Index alphabets from A to Z
+    for( int l=65;l<=90;l++){
+        upper[z]=(char)l; //insert appropriate aplhabets into the array using ascii values.
+        z++;
+    }
+    z=0;
+    //Index alphabets from a to z
+    for (int l =97; l<=122;l++){
+        lower[z]=(char)l;
+        z++;
+    }
+    int j = 0;
+    for(i=0; i<strlen(msg);i++){
+        if(isalpha(msg[i])){
+            int counter= j%strlen(v); //choose appropriate value from the key
+            if(isupper(msg[i])){
+                char c = msg[i]+((int)(toupper(v[counter]))-65);
+                printf("%c",c);
+            }else if(islower(msg[i])){
+                char c = msg[i]+((int)(tolower(v[counter]))-97);
+                printf("%c",c);
+            }
             j++;
+        }else{
+            printf("%c",msg[i]);
         }
-        if(isupper(letter)){
-            result=(letter+key-65)%26+65;
-            j++;
-        }
-        else{
-            result=letter;
 
-        }printf("%c",result);
     }printf("\n");
+
+
 }

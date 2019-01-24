@@ -37,15 +37,36 @@ int main(int argc, string argv[]){
         if(isalpha(msg[i])){
             int counter= j%strlen(v); //choose appropriate value from the key
             if(isupper(msg[i])){
-                char c = msg[i]+((int)(toupper(v[counter]))-65);
-                printf("%c",c);
-            }else if(islower(msg[i])){
-                char c = msg[i]+((int)(tolower(v[counter]))-97);
-                printf("%c",c);
+                //int k=  ((int)msg[i]+((int)(toupper(v[counter]))-65))%90-1;
+                int c = msg[i]+((int)(toupper(v[counter]))-65); //getting the cipher characters one by one
+                int a = c%65;
+                // int a;
+                if(a>25){
+                    a=c%90;
+                    printf("%c",upper[a-1]);
+                }
+                else{
+                    printf("%c",upper[a]);
+                }
+            }
+            else if(islower(msg[i])){
+                int sample = (int)(tolower(v[counter]));
+                int c = msg[i];
+                c = c +(sample-97);
+                int a = c%97;
+                // int a;
+                if(a>25){
+                    a=c%122;
+                    printf("%c",lower[a-1]);
+                }
+                else{
+                    printf("%c",lower[a]);
+                }
+
             }
             j++;
         }else{
-            printf("%c",msg[i]);
+            printf("%c",msg[i]); //if the input character is not an alphabet, just print it as is.
         }
 
     }printf("\n");
